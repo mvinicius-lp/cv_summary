@@ -2,6 +2,8 @@
 
 from typing import List
 from fastapi import APIRouter, File, UploadFile, HTTPException, Form
+from datetime import datetime
+import uuid
 
 from app.sumarizer import summarize_text
 from app.extract_text import extract_text_from_pdf, extract_text_from_image
@@ -12,7 +14,8 @@ router = APIRouter()
 @router.post("/extract_and_summarize")
 async def extract_and_summarize(
     files: List[UploadFile] = File(...),
-    job_requirements: str = Form(...)
+    job_requirements: str = Form(...),
+    user_id: str = Form(...),
 ):
     summaries = []
     resume_texts = []
@@ -43,6 +46,9 @@ async def extract_and_summarize(
         best_candidate_response = answer_best_candidate(question, resume_texts)
 
         return {
+            "request_id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "timestamp": datetime.utcnow().isoformat(),
             "summaries": summaries,
             "best_candidate_answer": best_candidate_response
         }

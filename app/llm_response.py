@@ -5,9 +5,9 @@ def answer_best_candidate(question: str, resume_texts: list) -> str:
     try:
         resumes_combined = "\n\n".join(resume_texts)
         input_prompt = (
-            "Há vários currículos abaixo. Com base na descrição da vaga, "
-            "qual currículo é o mais adequado? Justifique sua escolha com base nos conteúdos dos currículos.\n\n"
-            "Não cite os currículos que não foram escolhidos na resposta"
+            "qual currículo é o mais adequado? Justifique sua escolha com base nos conteúdos dos currículos e na descrição da vaga.\n\n"
+            "Não cite os currículos que não foram escolhidos na construção da resposta"
+            "Sempre cite o nome do melhor candidato para a vaga"
             f"Currículos:\n{resumes_combined}\n\n"
             f"Descrição da vaga: {question}"
         )
