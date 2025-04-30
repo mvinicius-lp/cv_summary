@@ -1,12 +1,9 @@
-# app/routes/extract_text.py
-
 import io
 import cv2
 import fitz
 import easyocr
 import numpy as np
 
-# Inicializa o leitor OCR
 reader = easyocr.Reader(['en', 'pt'])
 
 def extract_text_from_pdf(pdf_file) -> str | dict:

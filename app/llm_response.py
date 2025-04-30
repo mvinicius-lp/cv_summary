@@ -1,4 +1,3 @@
-# app/llm_response.py
 import ollama
 
 def answer_best_candidate(question: str, resume_texts: list) -> str:

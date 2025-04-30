@@ -1,6 +1,5 @@
 # Ignora variáveis de ambiente
 .env
-.env.*
 
 # Python
 __pycache__/

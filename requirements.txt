@@ -9,4 +9,7 @@ paddlepaddle
 easyocr
 dotenv
 huggingface_hub>=0.12.1  
-transformers>=4.27.0    
+transformers>=4.27.0 
+pymongo==4.7.2   
+ollama
+pydantic
