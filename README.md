@@ -1,4 +1,3 @@
-```markdown
 # Resume AI Backend
 
 Este projeto é um backend para automatizar a análise de currículos, utilizando OCR e LLMs (Large Language Models) para gerar resumos e respostas baseadas em perguntas sobre os currículos.
@@ -120,13 +119,13 @@ http://127.0.0.1:8000/docs
 
 Nesta documentação, você pode testar todos os endpoints da API, incluindo a extração e resumo de currículos.
 
-### 3. Executar com Docker
-
-Se você preferir rodar o projeto em um container Docker, você pode utilizar o `Dockerfile` incluído para construir e executar a aplicação.
-
 ![Visualização de dados](./images/imagem01.png)
 ![Visualização de dados](./images/imagem02.png)
 ![Visualização de dados](./images/imagem03.png)
+
+### 3. Executar com Docker
+
+Se você preferir rodar o projeto em um container Docker, você pode utilizar o `Dockerfile` incluído para construir e executar a aplicação.
 
 #### 3.1. Criar a imagem Docker
 
