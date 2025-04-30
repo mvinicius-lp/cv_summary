@@ -1,26 +1,24 @@
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, File, UploadFile, HTTPException, Form
 from datetime import datetime
 import uuid
-from bson import ObjectId
 
-from app.models.schemas import ExtractAndSummarizeResponse 
 from app.sumarizer import summarize_text
 from app.extract_text import extract_text_from_pdf, extract_text_from_image
 from app.llm_response import answer_best_candidate
-from app.db.mongo import save_summary_record
+from app.db.mongo import save_summary, collection
+from app.models.schemas import FullAnalysisResponse, SummariesOnlyResponse
 
 router = APIRouter()
 
-@router.post("/extract_and_summarize", response_model=ExtractAndSummarizeResponse)
+@router.post("/extract_and_summarize")
 async def extract_and_summarize(
     files: List[UploadFile] = File(...),
-    job_requirements: str = Form(...),
+    job_requirements: Optional[str] = Form(None),
     user_id: str = Form(...),
 ):
     summaries = []
     resume_texts = []
-
     request_id = str(uuid.uuid4())
     timestamp = datetime.utcnow()
 
@@ -56,24 +54,34 @@ async def extract_and_summarize(
         if not resume_texts:
             raise HTTPException(status_code=400, detail="Nenhum currículo processado com sucesso.")
 
-        question = f"Qual desses currículos se enquadra melhor para a vaga com os seguintes requisitos: {job_requirements}?"
-        best_candidate_response = answer_best_candidate(question, resume_texts)
-
-        result_payload = {
+        base_payload = {
             "request_id": request_id,
             "user_id": user_id,
             "timestamp": timestamp,
-            "summaries": summaries,
-            "best_candidate_answer": best_candidate_response
-        }
-        record_id = save_summary_record(result_payload)
-
-        response_data = {
-            **result_payload,
-            "record_id": record_id
+            "summaries": summaries
         }
 
-        return ExtractAndSummarizeResponse(**response_data)
+        if job_requirements:
+            best_candidate_response = answer_best_candidate(
+                f"Qual currículo melhor atende: {job_requirements}?", 
+                resume_texts
+            )
+            result_payload = {**base_payload, "best_candidate_answer": best_candidate_response}
+            record_id = save_summary(result_payload)
+            return FullAnalysisResponse(**result_payload, record_id=record_id)
+        else:
+            record_id = save_summary(base_payload)
+            return SummariesOnlyResponse(**base_payload, record_id=record_id)
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/logs")
+async def get_logs():
+    try:
+        logs = list(collection.find({}, {"_id": 0}))
+        if not logs:
+            return {"message": "Nenhum registro encontrado"}
+        return logs
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

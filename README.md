@@ -119,8 +119,27 @@ http://127.0.0.1:8000/docs
 
 Nesta documentação, você pode testar todos os endpoints da API, incluindo a extração e resumo de currículos.
 
+#### 2.1 POST
+
+- Receba múltiplos PDFs ou imagens (JPEG/PNG). 
+
+- Extraia texto via OCR e gere sumários claros de cada currículo. 
+
+- Responda a perguntas do tipo “Qual desses currículos se enquadra melhor 
+para a vaga de Engenheiro de Software com requisitos {...}?” com 
+justificativas baseadas no conteúdo.
+
+- Registre em um banco não relacional um log contendo request_id, 
+user_id, timestamp, query e resultado — sem armazenar o documento 
+completo — para que Fabio possa auditar e analisar o uso da ferramenta 
+
 ![Visualização de dados](./images/imagem01.png)
 ![Visualização de dados](./images/imagem02.png)
+
+#### 2.2 GET
+
+- retorna as os dados das consultas realizadas
+
 ![Visualização de dados](./images/imagem03.png)
 
 ### 3. Executar com Docker
