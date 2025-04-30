@@ -12,7 +12,7 @@ A aplicação expõe uma API RESTful utilizando o **FastAPI** e realiza as segui
 - **Python 3.8+**: Certifique-se de ter o Python instalado.
 - **MongoDB**: Banco de dados MongoDB para armazenar os resumos gerados.
 - **Ollama**: Ferramenta para rodar modelos LLM localmente.
-- **Docker**: Opcional, mas recomendado para empacotar e executar a aplicação.
+- **Docker**: Recomendado para empacotar e executar a aplicação.
 
 ## Instalação
 
@@ -138,7 +138,7 @@ completo — para que Fabio possa auditar e analisar o uso da ferramenta
 
 #### 2.2 GET
 
-- retorna as os dados das consultas realizadas
+- retorna os dados das consultas realizadas
 
 ![Visualização de dados](./images/imagem03.png)
 
@@ -195,7 +195,7 @@ Se você estiver usando o MongoDB Atlas como sua base de dados, siga os passos a
   - A data de criação
   - Qualquer informação adicional registrada no log
 
-> 💡 Dica: você pode aplicar filtros, ordenar os resultados por data, ou exportar os dados diretamente pelo painel do Atlas.
+Dica: você pode aplicar filtros, ordenar os resultados por data, ou exportar os dados diretamente pelo painel do Atlas.
 
 ![Visualização de dados](./images/imagem04.png)
 ```
